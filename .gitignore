@@ -11,3 +11,9 @@ containers/
 
 # Datos de MinIO
 data/
+
+# Archivos de Docker
+.docker/
+
+# Logs
+logs/
