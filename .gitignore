@@ -1,0 +1,13 @@
+# Excluir repositorio anidado de Bitnami
+containers/
+
+# Archivos temporales
+*.tmp
+*.log
+
+# Archivos de configuración local
+.env
+.env.local
+
+# Datos de MinIO
+data/
