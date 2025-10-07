@@ -1,7 +1,7 @@
-FROM minio/minio:latest
+FROM alpine:latest
 
-# Install curl for health checks
-RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+# Install MinIO and curl
+RUN apk add --no-cache minio curl
 
 # Set environment variables
 ENV MINIO_ROOT_USER=chatwoot
