@@ -1,4 +1,4 @@
-FROM bitnami/minio:2025.9.7
+FROM minio/minio:latest
 
 # Set environment variables
 ENV MINIO_ROOT_USER=${MINIO_ROOT_USER:-admin}
