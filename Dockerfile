@@ -1,9 +1,14 @@
 FROM minio/minio:latest
 
-# Set environment variables
-ENV MINIO_ROOT_USER=${MINIO_ROOT_USER:-admin}
-ENV MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD:-password123}
-ENV MINIO_SERVER_URL=${MINIO_SERVER_URL:-http://localhost:9000}
+# Set environment variables with explicit values
+ENV MINIO_ROOT_USER=chatwoot
+ENV MINIO_ROOT_PASSWORD=qaz11wsx22edc33rv55
+ENV MINIO_SERVER_URL=https://dev-minio-custom.mev2a6.easypanel.host
+ENV MINIO_BROWSER_REDIRECT_URL=https://dev-minio-custom.mev2a6.easypanel.host
+
+# Copy entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 # Create MinIO data directory
 RUN mkdir -p /data/minio
@@ -15,5 +20,5 @@ EXPOSE 9000 9001
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD curl -f http://localhost:9000/minio/health/live || exit 1
 
-# Start MinIO server with specific data path
-CMD ["minio", "server", "/data/minio", "--console-address", ":9001"]
+# Use custom entrypoint
+ENTRYPOINT ["/entrypoint.sh"]
