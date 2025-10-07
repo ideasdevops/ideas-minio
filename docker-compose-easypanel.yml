@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  minio:
+    build: .
+    container_name: minio-custom
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: chatwoot
+      MINIO_ROOT_PASSWORD: qaz11wsx22edc33rv55
+    volumes:
+      - minio_data:/data/minio
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
+volumes:
+  minio_data:
+    driver: local

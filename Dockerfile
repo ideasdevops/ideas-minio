@@ -1,17 +1,20 @@
 FROM minio/minio:latest
 
-# Set environment variables with explicit values
+# Install curl for health checks
+RUN apk add --no-cache curl
+
+# Set environment variables
 ENV MINIO_ROOT_USER=chatwoot
 ENV MINIO_ROOT_PASSWORD=qaz11wsx22edc33rv55
 ENV MINIO_SERVER_URL=https://dev-minio-custom.mev2a6.easypanel.host
 ENV MINIO_BROWSER_REDIRECT_URL=https://dev-minio-custom.mev2a6.easypanel.host
 
+# Create MinIO data directory
+RUN mkdir -p /data/minio
+
 # Copy entrypoint script
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
-
-# Create MinIO data directory
-RUN mkdir -p /data/minio
 
 # Expose ports
 EXPOSE 9000 9001
