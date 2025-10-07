@@ -5,8 +5,8 @@ ENV MINIO_ROOT_USER=${MINIO_ROOT_USER:-admin}
 ENV MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD:-password123}
 ENV MINIO_SERVER_URL=${MINIO_SERVER_URL:-http://localhost:9000}
 
-# Create data directory
-RUN mkdir -p /data
+# Create MinIO data directory
+RUN mkdir -p /data/minio
 
 # Expose ports
 EXPOSE 9000 9001
@@ -15,5 +15,5 @@ EXPOSE 9000 9001
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD curl -f http://localhost:9000/minio/health/live || exit 1
 
-# Start MinIO server
-CMD ["minio", "server", "/data", "--console-address", ":9001"]
+# Start MinIO server with specific data path
+CMD ["minio", "server", "/data/minio", "--console-address", ":9001"]
